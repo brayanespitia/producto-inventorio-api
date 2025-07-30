@@ -25,14 +25,6 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new JsonApiResponse<>(product));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<JsonApiResponse<Product>> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(new JsonApiResponse<>(productService.getById(id)));
-    }
 
-    @GetMapping
-    public ResponseEntity<JsonApiResponse<List<Product>>> getAll() {
-        return ResponseEntity.ok(new JsonApiResponse<>(productService.getAll()));
-    }
 
 }
