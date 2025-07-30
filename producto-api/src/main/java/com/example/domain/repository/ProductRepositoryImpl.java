@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,11 +29,15 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Optional<Product> findById(Long id) {
-        return Optional.empty();
+        return jpaProductRepository.findById(id)
+                .map(entity -> modelMapper.map(entity, Product.class));
     }
 
     @Override
     public List<Product> findAll() {
-        return null;
+        return jpaProductRepository.findAll()
+                .stream()
+                .map(entity -> modelMapper.map(entity, Product.class))
+                .collect(Collectors.toList());
     }
 }

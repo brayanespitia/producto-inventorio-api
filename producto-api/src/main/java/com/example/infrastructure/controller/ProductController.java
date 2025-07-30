@@ -25,6 +25,19 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new JsonApiResponse<>(product));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<JsonApiResponse<Product>> getById(@PathVariable Long id) {
+        return productService.findById(id)
+                .map(product -> ResponseEntity.ok(new JsonApiResponse<>(product)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<JsonApiResponse<List<Product>>> getAll() {
+        List<Product> products = productService.findAll();
+        return ResponseEntity.ok(new JsonApiResponse<>(products));
+    }
+
 
 
 }
