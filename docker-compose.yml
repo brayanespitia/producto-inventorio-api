@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+
+  product-db:
+    image: postgres:15
+    container_name: product-db
+    environment:
+      POSTGRES_DB: productdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - backend
+
+  inventory-db:
+    image: postgres:15
+    container_name: inventory-db
+    environment:
+      POSTGRES_DB: inventorydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    networks:
+      - backend
+
+  product-service:
+    build:
+      context: ./producto-api
+    container_name: product-service
+    depends_on:
+      - product-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://product-db:5432/productdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "9057:8080"
+    networks:
+      - backend
+
+  inventory-service:
+    build:
+      context: ./Inventario-api
+    container_name: inventory-service
+    depends_on:
+      - inventory-db
+      - product-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://inventory-db:5432/inventorydb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      PRODUCT_CLIENT_URL: http://product-service:8080
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
+networks:
+  backend:

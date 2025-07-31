@@ -4,14 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateProductRequest {
-    private String nombre;
-    private BigDecimal precio;
-    private String descripcion;
-
+public class InventoryAttributes {
+    private Long productId;
+    private Integer quantity;
 }

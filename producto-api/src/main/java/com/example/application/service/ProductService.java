@@ -12,4 +12,7 @@ public interface ProductService {
 
     Optional<Product> findById(Long id);
     List<Product> findAll();
+
+    Integer getAvailableQuantity(Long productId);
+
 }

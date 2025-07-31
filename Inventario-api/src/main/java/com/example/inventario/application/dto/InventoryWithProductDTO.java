@@ -1,20 +1,16 @@
-package com.example.domain.model;
-
+package com.example.inventario.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-
-    private Long id;
-
+public class InventoryWithProductDTO  {
+    private Long productId;
     private String name;
-    private BigDecimal price;
     private String description;
+    private Double price;
+    private Integer quantity;
 }

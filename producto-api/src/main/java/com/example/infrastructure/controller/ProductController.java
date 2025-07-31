@@ -1,7 +1,7 @@
 package com.example.infrastructure.controller;
 
 
-import com.example.JsonApiResponse;
+import com.example.infrastructure.config.JsonApiResponse;
 import com.example.application.dto.CreateProductRequest;
 import com.example.application.service.ProductService;
 import com.example.domain.model.Product;
@@ -26,17 +26,25 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JsonApiResponse<Product>> getById(@PathVariable Long id) {
+    public ResponseEntity<Product> getById(@PathVariable Long id) {
         return productService.findById(id)
-                .map(product -> ResponseEntity.ok(new JsonApiResponse<>(product)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
 
     @GetMapping
     public ResponseEntity<JsonApiResponse<List<Product>>> getAll() {
         List<Product> products = productService.findAll();
         return ResponseEntity.ok(new JsonApiResponse<>(products));
     }
+
+    @GetMapping("/{id}/available-quantity")
+    public ResponseEntity<JsonApiResponse<Integer>> getAvailableQuantity(@PathVariable Long id) {
+        Integer quantity = productService.getAvailableQuantity(id);
+        return ResponseEntity.ok(new JsonApiResponse<>(quantity));
+    }
+
 
 
 

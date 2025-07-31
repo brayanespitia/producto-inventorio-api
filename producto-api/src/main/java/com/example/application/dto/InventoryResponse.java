@@ -1,0 +1,19 @@
+package com.example.application.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class InventoryResponse {
+    private InventoryData data;
+
+    public Integer getQuantity() {
+        return data != null && data.getAttributes() != null
+                ? data.getAttributes().getQuantity()
+                : 0;
+    }
+
+}
